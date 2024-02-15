@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import './Card.css'; 
 import {Link, useNavigate} from 'react-router-dom';
 
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import Regtangle from '../../assets/Rectangle.png';
 import location from '../../assets/location2.svg';

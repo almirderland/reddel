@@ -8,57 +8,51 @@ import "../../components/categories/Сategories.css";
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from "react-i18next"
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
+
 
 
 function Restaurants() {
     const {t, i18n} = useTranslation();
     const [shownCount, setShownCount] = useState(9); // Initially, show 9 elements
     const [cardArray, setCardArray] = useState([<Card
+        title={<Skeleton/>}
         item_image="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAC8CAMAAAC672BgAAAAA1BMVEWxrq37BefPAAAARklEQVR4nO3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAbFjAAB3KzK6gAAAABJRU5ErkJggg=="
-        title="██████████████████"
         id=""
+        description={<Skeleton count={4} />}
         slug="#"
         tags=""
-        description="███████████████████████
-        █████████████████████████████
-        ██████████████████████████"
         key="0"
-        location="████████"
         logo="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAC8CAMAAAC672BgAAAAA1BMVEWxrq37BefPAAAARklEQVR4nO3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAbFjAAB3KzK6gAAAABJRU5ErkJggg=="
     />,<Card
+        title={<Skeleton/>}
+        description={<Skeleton count={4} />}
         item_image="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAC8CAMAAAC672BgAAAAA1BMVEWxrq37BefPAAAARklEQVR4nO3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAbFjAAB3KzK6gAAAABJRU5ErkJggg=="
-        title="██████████████████"
         id=""
         slug="#"
         tags=""
-        description="███████████████████████
-        █████████████████████████████
-        ██████████████████████████"
         key="1"
-        location="████████"
         logo="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAC8CAMAAAC672BgAAAAA1BMVEWxrq37BefPAAAARklEQVR4nO3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAbFjAAB3KzK6gAAAABJRU5ErkJggg=="
     />, <Card
+        title={<Skeleton/>}
+        description={<Skeleton count={4} />}
         item_image="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAC8CAMAAAC672BgAAAAA1BMVEWxrq37BefPAAAARklEQVR4nO3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAbFjAAB3KzK6gAAAABJRU5ErkJggg=="
-        title="██████████████████"
         id=""
         slug="#"
         tags=""
-        description="███████████████████████
-        █████████████████████████████
-        ██████████████████████████"
         key="2"
-        location="████████"
         logo="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAC8CAMAAAC672BgAAAAA1BMVEWxrq37BefPAAAARklEQVR4nO3BAQEAAACAkP6v7ggKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAbFjAAB3KzK6gAAAABJRU5ErkJggg=="
     />]);
     const [selectedCategory, setSelectedCategory] = useState("Все"); // Default to "Все" category
     const [categories, setCategories] = useState([
         "Все",
-        "████████",
-        "████████",
-        "████████",
-        "████████",
-        "████████",
-        "████████",
+        "█████",
+        "█████",
+        "█████",
+        "█████",
+        "█████",
+        "█████"
     ]);
 
     useEffect(() => {
