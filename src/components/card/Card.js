@@ -51,7 +51,6 @@ function Card(props) {
                         })
                 })
         } catch (error) {
-            console.log("ERROR")
             navigate('/profile')
         }
 

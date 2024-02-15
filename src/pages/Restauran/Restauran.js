@@ -46,7 +46,8 @@ function Restauran() {
       <div className="desk">
         <Header className='res' />
         <div className="main-content">
-          <CartHeader title={data.title}
+          <CartHeader id={data.id}
+                      title={data.title}
                       logo={"https://api.reddel.kz"+data.logo}
                       tags={data.tags}/>
           <CartMain id={data.id}
@@ -71,7 +72,8 @@ function Restauran() {
       </div>
         <div className="mobile">
           <MobileCartHeader/>
-          <MobileCartMain title={data.title}
+          <MobileCartMain id={data.id}
+                          title={data.title}
                           insta={data.insta}
                           whatsapp={data.whatsapp}
                           images={data.images}

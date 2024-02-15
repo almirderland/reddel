@@ -4,14 +4,52 @@ import heard5 from '../../assets/heart3.svg';
 import image from '../../assets/image.png';
 import './CartHeader.css';
 import { useTranslation } from "react-i18next"
+import {useNavigate} from "react-router-dom";
 
 
 function Header(props) {
-  const [isFavorite, setIsFavorite] = useState(false); 
+
+    const [isFavorite, setIsFavorite] = useState(false);
     console.log(props.tags)
-  const toggleFavorite = () => {
-    setIsFavorite((prevIsFavorite) => !prevIsFavorite); 
-  };
+
+    const navigate = useNavigate();
+    const handleLikeClick = (id: any) => {
+        console.log(id)
+        try {
+            fetch('https://api.reddel.kz/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({'jwt': localStorage.getItem('accessToken')})
+            })
+                .then((response) => {
+                    if(response.status == '200'){
+                        return response.json()
+                    }
+                    else{
+                        navigate('/login')
+                    }
+                })
+                .then((data) => {
+                    fetch("https://api.reddel.kz/add_to_favorite/" + data.id + "/" + id, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                        .then((response) => {
+                            setIsFavorite(!isFavorite);
+                        })
+                        .catch((error) => {
+                            alert(error)
+                        })
+                })
+        } catch (error) {
+            navigate('/profile')
+        }
+
+    };
     const {t, i18n} = useTranslation();
 
     return (
@@ -28,7 +66,7 @@ function Header(props) {
             </div>
           </div>
 
-          <button className="card-button" onClick={toggleFavorite}>
+          <button className="card-button" onClick={handleLikeClick}>
             <img src={isFavorite ? heard5 : heard3} alt="heart"/>
             {t("В избранное")}
           </button>

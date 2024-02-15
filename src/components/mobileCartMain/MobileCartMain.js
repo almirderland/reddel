@@ -58,12 +58,46 @@ function MobileCartMain(props) {
       if(selectedPrice != null){
           setShowVerification(true)
       }
-    setIsModalOpen(true); 
+    setIsModalOpen(true);
   };
 
-  const handleFavoriteClick = () => {
-    setIsFavorite(!isFavorite);
-  };
+    const handleLikeClick = (id: any) => {
+        console.log(id)
+        try {
+            fetch('https://api.reddel.kz/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({'jwt': localStorage.getItem('accessToken')})
+            })
+                .then((response) => {
+                    if(response.status == '200'){
+                        return response.json()
+                    }
+                    else{
+                        navigate('/login')
+                    }
+                })
+                .then((data) => {
+                    fetch("https://api.reddel.kz/add_to_favorite/" + data.id + "/" + id, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                        .then((response) => {
+                            setIsFavorite(!isFavorite);
+                        })
+                        .catch((error) => {
+                            alert(error)
+                        })
+                })
+        } catch (error) {
+            navigate('/profile')
+        }
+
+    };
     const openCarousel = () => {
         setIsCarouselOpen(true);
     };
@@ -100,7 +134,7 @@ function MobileCartMain(props) {
             <a href={props.insta}>Instagram</a>
           </div>
           <div>
-              <img src={isFavorite ? heart2 : heart} alt="heart" onClick={handleFavoriteClick} />
+              <img src={isFavorite ? heart2 : heart} alt="heart" onClick={() => handleLikeClick(props.id)} />
               <a>{t("В избранное")}</a>
           </div>
         </div>
