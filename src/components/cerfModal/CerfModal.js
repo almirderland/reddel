@@ -32,6 +32,20 @@ function  CerfModal({ onClose, prices, restaurant_id }) {
         "phone_number": ""
     });
     const [phone_number, setNumber] = useState('')
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                onClose();
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [onClose]);
+
     const sendAgain = () => {
         console.log(iin + "  " + number)
         fetch('https://api.ffin.credit/ffc-api-public/universal/general/send-otp', {
