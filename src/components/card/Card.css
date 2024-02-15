@@ -75,7 +75,7 @@
 }
 
 .card-body{
-    height: 50px;
+    height: max-content;
     margin-top: 15px;
     display: flex;
     align-items: center;
