@@ -66,7 +66,7 @@ function Header(props) {
             </div>
           </div>
 
-          <button className="card-button" onClick={handleLikeClick}>
+          <button className="card-button" onClick={() => handleLikeClick(props.id)}>
             <img src={isFavorite ? heard5 : heard3} alt="heart"/>
             {t("В избранное")}
           </button>
