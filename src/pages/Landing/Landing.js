@@ -115,7 +115,6 @@ function Landing() {
                     body: JSON.stringify(formData)
                 })
                     .then(async (response) => {
-                        alert(response.token)
                         formData.phone_number = phone.replaceAll(' ', '').replaceAll('-', '').replaceAll('(', '').replaceAll(')', '').replaceAll('+', '')
                         await fetch("https://api.reddel.kz/register", {
                             method: 'POST',
@@ -153,7 +152,9 @@ function Landing() {
                             }
                         })
                     }).catch(error => {
-                    console.log("FUCK " + error)
+                        setShowVerification(false)
+                        setShowLoader(false)
+                        setShowError(true)
                 })
             }
         })
@@ -232,10 +233,13 @@ function Landing() {
             .then(async data => {
                 console.log(data)
                 if (!data.success) {
-                    alert('Неверый код')
                     return
                 }
                 await handleSubmit()
+                if(!user.id){
+                    setShowLoader(false)
+                    return
+                }
                 console.log("User" + await user.id)
                 await fetch('https://api.ffin.credit/ffc-api-public/universal/apply/apply-lead', {
                     method: 'POST',
@@ -328,6 +332,9 @@ function Landing() {
                 })
             })
             .then((response) =>{
+                if (!response.ok){
+                    setIINError(true)
+                }
                 setShowLoader(false)
                 console.log(response)
                 setShowVerification(response.ok)
@@ -342,7 +349,7 @@ function Landing() {
         <button className="submit" type="submit" onClick={create_certificate}>Подать заявку</button>
     );
     const [showError, setShowError] = useState('')
-
+    const [showIINError, setIINError] = useState('')
     const handleInputChange = (e) => {
         setShowError(false)
         const { name, value, type, checked } = e.target;
@@ -465,7 +472,11 @@ function Landing() {
                             Reddel</p>
                     </label>
                 </div>
-                {showError && <p className='error'>Номер или электронная почта уже используются другим пользователем</p>}
+                <div className="margin5">
+                    {showIINError && <p className='error'>Введен неверный иин</p>}
+                    {showError && <p className='error'>Номер или электронная почта уже используются другим пользователем</p>}
+                </div>
+
             </form>
             <SubmitButton/>
 
