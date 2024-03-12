@@ -8,6 +8,7 @@ import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
 import Registration from "./pages/Registration/Registration";
 import Login from "./pages/Login/Login";
 import login from "./pages/Login/Login";
+import Landing from "./pages/Landing/Landing";
 
 export const router = createBrowserRouter([
         {
@@ -38,9 +39,13 @@ export const router = createBrowserRouter([
             path: "/registration",
             element: <Registration/>,
         },
-    {
-        path: "/login",
-        element: <Login/> // Pass the user's login status
-    },
+        {
+            path: "/login",
+            element: <Login/> // Pass the user's login status
+        },
+        {
+            path: '/landing',
+            element: <Landing/>
+        }
     ]
 );
