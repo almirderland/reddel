@@ -41,7 +41,7 @@
     width: 100%;
 }
 .w-90{
-    width: 90%;
+    width: 100%;
 }
 
 .amount{
@@ -62,7 +62,7 @@
 .row-input{
     margin: 0 5%;
     display: flex;
-    justify-content: space-between;
+    gap: calc(5% + 20px);
 }
 form{
     display: flex;
