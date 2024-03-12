@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import "./Landing.css";
 import InputMask from "react-input-mask";
 import {useTranslation} from "react-i18next";
+import TermsAndConditions from "../TermsAndConditions/TermsAndConditions";
 
 
 
@@ -13,9 +14,12 @@ function Landing() {
     const [iin, setIIN] = useState("")
     const [month, setMonth] = useState(-1)
     const {t, i18n} = useTranslation();
-    const [agreementChecked, setAgreementChecked] = useState(false)
     const [showTermsAndConditions, setShowTermsAndConditions] = useState(false);
+    const [agreementChecked, setAgreementChecked] = useState(false)
 
+    const closeTermsAndConditions = () => {
+        setShowTermsAndConditions(false);
+    };
 
     const handleMonth = (price) => {
         setMonth(price);
@@ -137,7 +141,7 @@ function Landing() {
                             setAgreementChecked(!agreementChecked)
                         }}
                     />
-                    <label htmlFor="agreementChecked text-12">
+                    <label htmlFor="agreementChecked" className="text-12">
                         <p className="text-14">Я согласен с {" "}
                             <a onClick={() => setShowTermsAndConditions(true)}>
                                 Условиями и Правилами
@@ -147,6 +151,9 @@ function Landing() {
                 </div>
                 <SubmitButton/>
             </form>
+            {showTermsAndConditions && (
+                <TermsAndConditions onClose={closeTermsAndConditions} />
+            )}
         </div>
     );
 }
