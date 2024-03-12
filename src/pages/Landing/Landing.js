@@ -30,7 +30,7 @@ function Landing() {
     };
     const InputField = ({ label, type, name }) => (
         <div>
-            <input className="w-90" type={type} name={name} placeholder={label} />
+            <input type={type} name={name} placeholder={label} />
         </div>
     );
 
@@ -66,11 +66,9 @@ function Landing() {
             </p>
             <h3 className="row">Заявка на сертификат</h3>
             <form onSubmit={handleSubmit}>
-                <div className="row-input">
+                <div className="row">
                     <InputField label="Имя" type="text" name="firstName"/>
                     <InputField label="Фамилия" type="text" name="lastName"/>
-                </div>
-                <div className="row">
                     <InputMask
                         type="integer"
                         mask="* * * * * * * * * * * *"
