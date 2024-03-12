@@ -30,7 +30,7 @@ function Landing() {
     };
     const InputField = ({ label, type, name }) => (
         <div>
-            <input type={type} name={name} placeholder={label} />
+            <input className="w-90" type={type} name={name} placeholder={label} />
         </div>
     );
 
