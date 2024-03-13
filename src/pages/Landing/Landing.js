@@ -392,7 +392,7 @@ function Landing() {
                         type="integer"
                         mask="* * * * * * * * * * * *"
                         maskChar=" "
-                        placeholder="_ _ _ _ _ _ _ _ _ _ _ _"
+                        placeholder="ИИН"
                         value={iin}
                         onChange={(e) => {
                             const numbersOnly = e.target.value.replace(/[^0-9]/g, '');
