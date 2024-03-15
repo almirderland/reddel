@@ -125,7 +125,7 @@ function Registration() {
             setValidate(code)
             console.log("THE CODE", code)
 
-            // await fetch("https://api.mobizon.kz/service/message/sendsmsmessage?recipient=" + formData.phone_number + "&text=Код для входа на сайт https://reddel.kz : " + code + "&apiKey=kz0502f56621750a9ca3ac636e8301e235c2b647839531f2994222514c786fb6ff2178")
+            await fetch("https://api.mobizon.kz/service/message/sendsmsmessage?recipient=" + formData.phone_number + "&text=Код для входа на сайт https://reddel.kz : " + code + "&apiKey=kz0502f56621750a9ca3ac636e8301e235c2b647839531f2994222514c786fb6ff2178")
             setShowVerificationCode(true)
           } else {
             setShowError(true)
