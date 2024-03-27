@@ -420,27 +420,17 @@ function Landing2() {
                 <h3 className="row-amount">Сумма расрочки:</h3>
 
                 <div className="row-amount">
-                    <InstallmentButton amount="300 000" selectedAmount={selectedAmount}
+                    <InstallmentButton amount="30 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
-                    <InstallmentButton amount="400 000" selectedAmount={selectedAmount}
+                    <InstallmentButton amount="50 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
                     <InstallmentButton amount="100 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
                 </div>
                 <div className="row-amount">
-                    <InstallmentButton amount="500 000" selectedAmount={selectedAmount}
+                    <InstallmentButton amount="150 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
-                    <InstallmentButton amount="600 000" selectedAmount={selectedAmount}
-                                       setSelectedAmount={setSelectedAmount}/>
-                    <InstallmentButton amount="700 000" selectedAmount={selectedAmount}
-                                       setSelectedAmount={setSelectedAmount}/>
-                </div>
-                <div className="row-amount">
-                    <InstallmentButton amount="800 000" selectedAmount={selectedAmount}
-                                       setSelectedAmount={setSelectedAmount}/>
-                    <InstallmentButton amount="900 000" selectedAmount={selectedAmount}
-                                       setSelectedAmount={setSelectedAmount}/>
-                    <InstallmentButton amount="1 000 000" selectedAmount={selectedAmount}
+                    <InstallmentButton amount="200 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
                 </div>
 
@@ -484,19 +474,18 @@ function Landing2() {
                 </div>
                 <div className="margin5">
                     {showIINError && <p className='error'>Введен неверный иин</p>}
-                    {showError &&
-                        <p className='error'>Номер или электронная почта уже используются другим пользователем</p>}
+                    {showError && <p className='error'>Номер или электронная почта уже используются другим пользователем</p>}
                 </div>
 
             </form>
             <SubmitButton/>
 
             {showTermsAndConditions && (
-                <TermsAndConditions onClose={closeTermsAndConditions}/>
+                <TermsAndConditions onClose={closeTermsAndConditions} />
             )}
             {showVerification && <VerificationCode handleVerification={handleVerification} sendAgain={sendAgain}/>}
 
-            {showLoader ? <Loading loading background="" loaderColor="#3498db"/> : (<a></a>)}
+            {showLoader ? <Loading loading background="" loaderColor="#3498db"/>: (<a></a>)}
         </div>
     );
 }
