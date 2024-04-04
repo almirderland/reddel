@@ -474,18 +474,19 @@ function Landing2() {
                 </div>
                 <div className="margin5">
                     {showIINError && <p className='error'>Введен неверный иин</p>}
-                    {showError && <p className='error'>Номер или электронная почта уже используются другим пользователем</p>}
+                    {showError &&
+                        <p className='error'>Номер или электронная почта уже используются другим пользователем</p>}
                 </div>
 
             </form>
             <SubmitButton/>
 
             {showTermsAndConditions && (
-                <TermsAndConditions onClose={closeTermsAndConditions} />
+                <TermsAndConditions onClose={closeTermsAndConditions}/>
             )}
             {showVerification && <VerificationCode handleVerification={handleVerification} sendAgain={sendAgain}/>}
 
-            {showLoader ? <Loading loading background="" loaderColor="#3498db"/>: (<a></a>)}
+            {showLoader ? <Loading loading background="" loaderColor="#3498db"/> : (<a></a>)}
         </div>
     );
 }

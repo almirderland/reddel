@@ -124,38 +124,38 @@ function Landing2() {
                             },
                             body: JSON.stringify(formData)
                         })
-                        .then((response) => {
-                            return response.json()
-                        })
-                        .then(async data => {
-                            if (data) {
-                                localStorage.setItem('accessToken', data.token)
-                                await fetch('https://api.reddel.kz/user', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({'jwt': localStorage.getItem('accessToken')})
-                                })
-                                    .then((response) => {
-                                        return response.json();
+                            .then((response) => {
+                                return response.json()
+                            })
+                            .then(async data => {
+                                if (data) {
+                                    localStorage.setItem('accessToken', data.token)
+                                    await fetch('https://api.reddel.kz/user', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({'jwt': localStorage.getItem('accessToken')})
                                     })
-                                    .then(async (data) => {
-                                        console.log("DATA: " + data)
-                                        setNumber(data.phone_number)
-                                        setId(data.id)
-                                        await setUser(data)
-                                        user = data
-                                        console.log(user)
-                                        localStorage.setItem('userId', data.id)
-                                    })
-                            }
-                        })
+                                        .then((response) => {
+                                            return response.json();
+                                        })
+                                        .then(async (data) => {
+                                            console.log("DATA: " + data)
+                                            setNumber(data.phone_number)
+                                            setId(data.id)
+                                            await setUser(data)
+                                            user = data
+                                            console.log(user)
+                                            localStorage.setItem('userId', data.id)
+                                        })
+                                }
+                            })
                     }).catch(error => {
                         setShowVerification(false)
                         setShowLoader(false)
                         setShowError(true)
-                })
+                    })
             }
         })
 
@@ -297,40 +297,40 @@ function Landing2() {
                     })
             })
     }
-        const create_certificate = async (e) => {
-            if(selectedAmount==null || iin.length < 12)
-                return
-            setSelectedPrice(parseInt(selectedAmount) * 1000)
-            setShowLoader(true)
+    const create_certificate = async (e) => {
+        if(selectedAmount==null || iin.length < 12)
+            return
+        setSelectedPrice(parseInt(selectedAmount) * 1000)
+        setShowLoader(true)
 
-            e.preventDefault();
-            await fetch('https://api.ffin.credit/ffc-api-auth/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    'username': 'reddel@ffin.credit',
-                    'password': '3TxAA5@rsA9M$*yw'
-                })
+        e.preventDefault();
+        await fetch('https://api.ffin.credit/ffc-api-auth/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'username': 'reddel@ffin.credit',
+                'password': '3TxAA5@rsA9M$*yw'
             })
-                .then(async (response) => {
-                    let jwt = await response.json()
-                    console.log(jwt.access)
-                    console.log(iin, phone)
-                    localStorage.setItem("jwt", jwt.access)
-                })
-            await fetch('https://api.ffin.credit/ffc-api-public/universal/general/send-otp', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': "JWT " + localStorage.getItem("jwt")
-                },
-                body: JSON.stringify({
-                    'iin': iin,
-                    'mobile_phone': phone
-                })
+        })
+            .then(async (response) => {
+                let jwt = await response.json()
+                console.log(jwt.access)
+                console.log(iin, phone)
+                localStorage.setItem("jwt", jwt.access)
             })
+        await fetch('https://api.ffin.credit/ffc-api-public/universal/general/send-otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "JWT " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                'iin': iin,
+                'mobile_phone': phone
+            })
+        })
             .then((response) =>{
                 if (!response.ok){
                     setIINError(true)
@@ -343,7 +343,7 @@ function Landing2() {
             .catch((error) =>{
                 console.log(('error'))
             })
-        };
+    };
 
     const SubmitButton = () => (
         <button className="submit" type="submit" onClick={create_certificate}>Подать заявку</button>

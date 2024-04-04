@@ -7,9 +7,8 @@ import MobileSearch from "./pages/MobileSearch/MobileSearch";
 import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
 import Registration from "./pages/Registration/Registration";
 import Login from "./pages/Login/Login";
-import login from "./pages/Login/Login";
 import Landing from "./pages/Landing/Landing";
-import Landing2 from "./pages/Landing/Landing";
+import Landing2 from "./pages/Landing2/Landing2";
 
 export const router = createBrowserRouter([
         {
