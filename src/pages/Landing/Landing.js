@@ -440,7 +440,7 @@ function Landing2() {
                                        setSelectedAmount={setSelectedAmount}/>
                     <InstallmentButton amount="900 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
-                    <InstallmentButton amount="1 000 000" selectedAmount={selectedAmount}
+                    <InstallmentButton amount="1000 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
                 </div>
 
