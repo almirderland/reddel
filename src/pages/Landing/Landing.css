@@ -102,3 +102,31 @@ input{
     background: #F44027;
 
 }
+
+.desk{
+    display: none;
+}
+
+@media screen and (min-width: 970px){
+    .partners{
+        gap: 24px;
+    }
+    .partners-header{
+        font-size: 32px;
+    }
+
+    .partners-header span{
+        font-size: 24px;
+    }
+    .partners-list{
+        gap: 24px;
+    }
+    .mob{
+        display: none;
+    }
+    .desk{
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+}
