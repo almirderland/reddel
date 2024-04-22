@@ -463,7 +463,7 @@ function Landing2() {
                             <p>6 {t("месяцев")}</p>
                         </span>
                         <span className={month === 12 ? 'selected-price' : ''} onClick={() => handleMonth(12)}>
-                            <p>6 {t("месяцев")}</p>
+                            <p>12 {t("месяцев")}</p>
                         </span>
                 </div>
                 <div className="registration-checkbox margin5 w-100">
