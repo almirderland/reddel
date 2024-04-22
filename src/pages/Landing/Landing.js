@@ -459,7 +459,10 @@ function Landing2() {
                         <span className={month === 3 ? 'selected-price' : ''} onClick={() => handleMonth(3)}>
                             <p>3 {t("месяца")}</p>
                         </span>
-                    <span className={month === 6 ? 'selected-price' : ''} onClick={() => handleMonth(6)}>
+                        <span className={month === 6 ? 'selected-price' : ''} onClick={() => handleMonth(6)}>
+                            <p>6 {t("месяцев")}</p>
+                        </span>
+                        <span className={month === 12 ? 'selected-price' : ''} onClick={() => handleMonth(12)}>
                             <p>6 {t("месяцев")}</p>
                         </span>
                 </div>
