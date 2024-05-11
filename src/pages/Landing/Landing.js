@@ -442,6 +442,8 @@ function Landing2() {
                                        setSelectedAmount={setSelectedAmount}/>
                     <InstallmentButton amount="1000 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
+                    <InstallmentButton amount="2000 000" selectedAmount={selectedAmount}
+                                       setSelectedAmount={setSelectedAmount}/>
                 </div>
 
                 <svg className="margin5" width="207" height="16" viewBox="0 0 207 16" fill="none"
