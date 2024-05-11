@@ -67,15 +67,6 @@ function Certificate(props) {
                     <span>{t("Активируйте до")} 29.12.2023 {t("дейін іске қосыңыз")}</span>
                     </div>
                 }
-                {/*<span>Активируйте до 29.12.2023</span>*/}
-            {/* <div className="certification-header">
-                <img src={done2} alt="done" />
-                <span>Активирован - 23.06.2023</span>
-            </div>
-            <div className="certification-header">
-                <img src={done3} alt="done" />
-                <span>Срок действия истек</span>
-            </div> */}
             <h4>{t("Поздравляем")}! <br/> {t("Вы успешно оформили уникальный сертификат")} </h4>
             <p>{t("Ваш код")}:</p>
             {props.certificate.status && <h3>{props.certificate.encode.substring(0,10)}</h3>}

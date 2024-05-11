@@ -258,7 +258,7 @@ function Landing2() {
                             'principal': selectedPrice,
                         },
                         'additional_information': {
-                            'hook_url': 'http://api.reddel.kz:8000/handle',
+                            'hook_url': 'http://api.reddel.kz/handle',
                             'success_url': 'https://reddel.kz/profile',
                             'failure_url': 'https://reddel.kz/profile'
                         },
