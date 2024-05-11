@@ -442,6 +442,10 @@ function Landing2() {
                                        setSelectedAmount={setSelectedAmount}/>
                     <InstallmentButton amount="1000 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
+                </div>
+                <div className="row-amount">
+                    <InstallmentButton amount="1500 000" selectedAmount={selectedAmount}
+                                       setSelectedAmount={setSelectedAmount}/>
                     <InstallmentButton amount="2000 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
                 </div>
