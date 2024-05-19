@@ -471,6 +471,9 @@ function Landing2() {
                         <span className={month === 12 ? 'selected-price' : ''} onClick={() => handleMonth(12)}>
                             <p>12 {t("месяцев")}</p>
                         </span>
+                        <span className={month === 24 ? 'selected-price' : ''} onClick={() => handleMonth(24)}>
+                            <p>24 {t("месяцев")}</p>
+                        </span>
                 </div>
                 <div className="registration-checkbox margin5 w-100">
                     <input
