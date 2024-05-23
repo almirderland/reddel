@@ -250,9 +250,9 @@ function Landing2() {
                     body: JSON.stringify({
                         'iin': iin,
                         'mobile_phone': phone,
-                        'product': 'REDDEL',
+                        'product': 'REDDEL_24',
                         'channel': 'REDDEL_WEB',
-                        'partner': 'REDDEL_24',
+                        'partner': 'REDDEL',
                         'credit_params': {
                             'period': month,
                             'principal': selectedPrice,
