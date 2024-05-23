@@ -251,8 +251,8 @@ function Landing2() {
                         'iin': iin,
                         'mobile_phone': phone,
                         'product': 'REDDEL',
-                        'channel': 'REDDEL_24',
-                        'partner': 'REDDEL',
+                        'channel': 'REDDEL_WEB',
+                        'partner': 'REDDEL_24',
                         'credit_params': {
                             'period': month,
                             'principal': selectedPrice,
