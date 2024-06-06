@@ -13,7 +13,6 @@ import {useNavigate} from "react-router-dom";
 function Landing2() {
     const [selectedAmount, setSelectedAmount] = useState('');
     const [phone, setPhone] = useState('')
-    const [iin, setIIN] = useState("")
     const [month, setMonth] = useState(-1)
     const {t, i18n} = useTranslation();
     const [showTermsAndConditions, setShowTermsAndConditions] = useState(false);
@@ -22,12 +21,7 @@ function Landing2() {
     const navigate = useNavigate();
     const [selectedPrice, setSelectedPrice] = useState(null);
     const [showVerification, setShowVerification] = useState(false)
-    const [showIIN, setShowIIN] = useState(false)
-    const [reject, setReject] = useState(null)
-    const [iinOk, setIINOk] = useState(true)
     const [showLoader, setShowLoader] = useState(false)
-    const [userId, setId] = useState(null)
-    let number = ''
     const [formData, setFormData] = useState({
         "first_name": "",
         "last_name": "",
@@ -50,121 +44,7 @@ function Landing2() {
         setMonth(price);
     };
     const sendAgain = async () => {
-        console.log(iin + "  " + number)
-        await ('https://api.ffin.credit/ffc-api-public/universal/general/send-otp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': "JWT " + localStorage.getItem("jwt")
-            },
-            body: JSON.stringify({
-                'iin': iin,
-                'mobile_phone': '+' + phone_number
-            })
-        })
-            .then((response) =>{
-                console.log(iin + "  " + phone_number)
-                console.log(response)
-            })
-            .catch((error) =>{
-                console.log(('error'))
-            })
     }
-    const handleSubmit = async (e) => {
-        formData.phone_number = phone.replaceAll(' ', '').replaceAll('-', '').replaceAll('(', '').replaceAll(')', '').replaceAll('+', '')
-        await fetch('https://api.reddel.kz/login', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({"phone_number": formData.phone_number.replaceAll(/[^0-9]/g, '')})
-        }).then((response) => {
-            return response.json()
-        }).then(async (data) => {
-            if (data.token) {
-                localStorage.setItem('accessToken', data.token)
-                await fetch('https://api.reddel.kz/user', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({'jwt': localStorage.getItem('accessToken')})
-                })
-                    .then((response) => {
-                        return response.json();
-                    })
-                    .then(async (data) => {
-                        console.log("DATA: " + data)
-                        console.log(data.id)
-                        await setNumber(data.phone_number)
-                        await setId(data.id)
-                        await setUser(data)
-                        user = data
-                        console.log(user)
-                        localStorage.setItem('userId', data.id)
-                    })
-            } else {
-                console.log("FUCK ME FUCK ME")
-                await fetch("https://api.reddel.kz/checkUser", {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                })
-                    .then(async (response) => {
-                        formData.phone_number = phone.replaceAll(' ', '').replaceAll('-', '').replaceAll('(', '').replaceAll(')', '').replaceAll('+', '')
-                        await fetch("https://api.reddel.kz/register", {
-                            method: 'POST',
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(formData)
-                        })
-                        .then((response) => {
-                            return response.json()
-                        })
-                        .then(async data => {
-                            if (data) {
-                                localStorage.setItem('accessToken', data.token)
-                                await fetch('https://api.reddel.kz/user', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({'jwt': localStorage.getItem('accessToken')})
-                                })
-                                    .then((response) => {
-                                        return response.json();
-                                    })
-                                    .then(async (data) => {
-                                        console.log("DATA: " + data)
-                                        setNumber(data.phone_number)
-                                        setId(data.id)
-                                        await setUser(data)
-                                        user = data
-                                        console.log(user)
-                                        localStorage.setItem('userId', data.id)
-                                    })
-                            }
-                        })
-                    }).catch(error => {
-                        setShowVerification(false)
-                        setShowLoader(false)
-                        setShowError(true)
-                })
-            }
-        })
-
-    };
-    const InputField = ({ label, type, name }) => (
-        <div>
-            <input type={type} name={name} placeholder={label} />
-        </div>
-    );
 
     const InstallmentButton = ({ amount, selectedAmount, setSelectedAmount }) => (
         <button
@@ -213,143 +93,71 @@ function Landing2() {
             }, 10000);
         }
     }
-    const handleVerification = async (id) => {
-        let flag = false
-        await fetch('https://api.ffin.credit/ffc-api-public/universal/general/validate-otp', {
+    const [validate, setValidate] = useState('1')
+
+    const handleVerification = async (code) => {
+        code = code[0] + code[1] + code[2] + code[3]
+        formData.phone_number = phone.replaceAll(' ', '').replaceAll('-', '').replaceAll('(', '').replaceAll(')', '').replaceAll('+', '')
+        if (code != validate) {
+            alert('Неверный код')
+            return
+        }
+        try {
+            await fetch("https://api.reddel.kz/register", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+        } catch (error) {
+        }
+        await fetch(`https://factor.softpay.kz/creditor/reddel/installment/add/?contract=${formData.phone_number}&amount=${selectedPrice}&name=REDDEL`, {method: 'GET'})
+    }
+    const create_certificate = async (e) => {
+        e.preventDefault();
+        if(selectedAmount==null)
+            return
+        setSelectedPrice(parseInt(selectedAmount) * 1000)
+        // if (!agreementChecked) {
+        //     alert("Please agree to the terms and conditions.");
+        //     return;
+        // }
+        formData.phone_number = phone.replaceAll(' ', '').replaceAll('-', '').replaceAll('(', '').replaceAll(')', '').replaceAll('+', '')
+        fetch("https://api.reddel.kz/checkUser", {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': "JWT " + localStorage.getItem("jwt")
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                'iin': iin,
-                'mobile_phone': phone,
-                'code': id[0].toString() + id[1].toString() + id[2].toString() + id[3].toString()
-            })
+            body: JSON.stringify(formData)
         })
-            .then((response) => {
-                return response.json()
-            })
-            .then(async data => {
-                console.log(data)
-                if (!data.success) {
-                    return
-                }
-                await handleSubmit()
-                if(!user.id){
-                    setShowLoader(false)
-                    return
-                }
-                console.log("User" + await user.id)
-                await fetch('https://api.ffin.credit/ffc-api-public/universal/apply/apply-lead', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': "JWT " + localStorage.getItem("jwt")
-                    },
-                    body: JSON.stringify({
-                        'iin': iin,
-                        'mobile_phone': phone,
-                        'product': 'REDDEL',
-                        'channel': 'REDDEL_WEB',
-                        'partner': 'REDDEL',
-                        'credit_params': {
-                            'period': month,
-                            'principal': selectedPrice,
-                        },
-                        'additional_information': {
-                            'hook_url': 'http://api.reddel.kz:8000/handle',
-                            'success_url': 'https://reddel.kz/profile',
-                            'failure_url': 'https://reddel.kz/profile'
-                        },
-                        'credit_goods': [{'cost': selectedPrice}],
-                        'reference_id': userId,
-                    })
-                })
-                    .then((response) => {
-                        flag = response.ok
-                        return response.json();
-                    })
-                    .then(async data => {
-                        console.log(data.uuid)
-                        if (flag) {
-                            setShowLoader(true)
-                            await fetch('https://api.reddel.kz/set_status_data', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    uuid: data.uuid,
-                                    user_id: user.id,
-                                    restaurant_id: 1,
-                                    sum: selectedPrice,
-                                    period: month
-                                })
-                            })
-                            setTimeout(() => {
-                                waitForRedirect(data.uuid)
-                            }, 20000);
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error.message)
-                    })
-            })
-    }
-        const create_certificate = async (e) => {
-            if(selectedAmount==null || iin.length < 12)
-                return
-            setSelectedPrice(parseInt(selectedAmount) * 1000)
-            setShowLoader(true)
+            .then(async (response) => {
+                let randomNumber = Math.floor(Math.random() * 10000);
+                let code = randomNumber.toString().padStart(4, '0')
 
-            e.preventDefault();
-            await fetch('https://api.ffin.credit/ffc-api-auth/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    'username': 'reddel@ffin.credit',
-                    'password': '3TxAA5@rsA9M$*yw'
-                })
-            })
-                .then(async (response) => {
-                    let jwt = await response.json()
-                    console.log(jwt.access)
-                    console.log(iin, phone)
-                    localStorage.setItem("jwt", jwt.access)
-                })
-            await fetch('https://api.ffin.credit/ffc-api-public/universal/general/send-otp', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': "JWT " + localStorage.getItem("jwt")
-                },
-                body: JSON.stringify({
-                    'iin': iin,
-                    'mobile_phone': phone
-                })
-            })
-            .then((response) =>{
-                if (!response.ok){
-                    setIINError(true)
+                if (response.status == 200) {
+                    setValidate(code)
+                    console.log("THE CODE", code)
+
+                    await fetch("https://api.mobizon.kz/service/message/sendsmsmessage?recipient=" + formData.phone_number + "&text=Код для входа на сайт https://reddel.kz : " + code + "&apiKey=kz0502f56621750a9ca3ac636e8301e235c2b647839531f2994222514c786fb6ff2178")
+                    setShowVerification(true)
+                } else {
+                    setValidate(code)
+                    let data = formData.phone_number.replaceAll(/[^0-9]/g, '')
+                    await fetch("https://api.mobizon.kz/service/message/sendsmsmessage?recipient=" + data + "&text=Код для входа на сайт https://reddel.kz: " + code + "&apiKey=kz0502f56621750a9ca3ac636e8301e235c2b647839531f2994222514c786fb6ff2178")
+
+                    setShowVerification(true)
                 }
-                setShowLoader(false)
-                console.log(response)
-                setShowVerification(response.ok)
-                setIINOk(response.ok)
             })
-            .catch((error) =>{
-                console.log(('error'))
-            })
-        };
+
+    };
 
     const SubmitButton = () => (
         <button className="submit" type="submit" onClick={create_certificate}>Подать заявку</button>
     );
     const [showError, setShowError] = useState('')
-    const [showIINError, setIINError] = useState('')
     const handleInputChange = (e) => {
         setShowError(false)
         const { name, value, type, checked } = e.target;
@@ -387,19 +195,6 @@ function Landing2() {
                         onChange={handleInputChange}
                         required={true}
                     />
-
-                    <InputMask
-                        type="integer"
-                        mask="* * * * * * * * * * * *"
-                        maskChar=" "
-                        placeholder="ИИН"
-                        value={iin}
-                        onChange={(e) => {
-                            const numbersOnly = e.target.value.replace(/[^0-9]/g, '');
-                            setIIN(numbersOnly)
-                        }
-                        }
-                    />
                     <input
                         type="email"
                         name="email"
@@ -420,8 +215,6 @@ function Landing2() {
                 <h3 className="row-amount">Сумма расрочки:</h3>
 
                 <div className="row-amount">
-                    <InstallmentButton amount="30 000" selectedAmount={selectedAmount}
-                                       setSelectedAmount={setSelectedAmount}/>
                     <InstallmentButton amount="50 000" selectedAmount={selectedAmount}
                                        setSelectedAmount={setSelectedAmount}/>
                     <InstallmentButton amount="100 000" selectedAmount={selectedAmount}
@@ -473,7 +266,6 @@ function Landing2() {
                     </label>
                 </div>
                 <div className="margin5">
-                    {showIINError && <p className='error'>Введен неверный иин</p>}
                     {showError &&
                         <p className='error'>Номер или электронная почта уже используются другим пользователем</p>}
                 </div>
