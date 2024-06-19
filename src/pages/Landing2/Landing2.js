@@ -7,6 +7,7 @@ import TermsAndConditions from "../TermsAndConditions/TermsAndConditions";
 import Loading from "react-fullscreen-loading";
 import VerificationCode from "../../components/verificationCode/VerificationCode";
 import {useNavigate} from "react-router-dom";
+import {router} from "../../Routes";
 
 
 
@@ -113,7 +114,7 @@ function Landing2() {
             })
         } catch (error) {
         }
-        await fetch(`https://factor.softpay.kz/creditor/reddel/installment/add/?contract=${formData.phone_number}&amount=${selectedPrice}&name=REDDEL`, {method: 'GET'})
+        window.location.href = `https://factor.softpay.kz/creditor/reddel/installment/add/?contract=${formData.phone_number}&amount=${selectedPrice}&name=REDDEL`
     }
     const create_certificate = async (e) => {
         e.preventDefault();
